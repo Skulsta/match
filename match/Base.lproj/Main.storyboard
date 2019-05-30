@@ -57,6 +57,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="backCardImageView" destination="KNt-tC-dmw" id="SiF-AV-odu"/>
+                                            <outlet property="frontCardImageView" destination="Sgt-Bs-1nV" id="DX7-Uk-7So"/>
                                             <outlet property="frontCardImageViewq" destination="Sgt-Bs-1nV" id="C6i-9S-zdD"/>
                                         </connections>
                                     </collectionViewCell>
