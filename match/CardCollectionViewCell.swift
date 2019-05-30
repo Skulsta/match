@@ -25,11 +25,17 @@ class CardCollectionViewCell: UICollectionViewCell {
     }
     
     func flip() {
+        
+        // The actual flipping
         UIView.transition(from: backCardImageView, to: frontCardImageView, duration: 0.3, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
+        
     }
     
     func flipBack() {
         
-    }
+        // The actual flipping
+        UIView.transition(from: frontCardImageView, to: backCardImageView, duration: 0.3, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+        
+    } 
     
 }

@@ -43,7 +43,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         let cell = collectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
         
-        cell.flip()
+        let card = cardArray[indexPath.row]
+        
+        if !card.isFlipped {
+            cell.flip()
+            card.isFlipped = true
+        } else {
+            cell.flipBack()
+            card.isFlipped = false
+        }
     }
 }
 
