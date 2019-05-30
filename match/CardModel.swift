@@ -10,10 +10,10 @@ import Foundation
 
 class CardModel {
     
-    // Instanciate an array to store the cards
-    var cardArray = [Card]()
-    
     func getCards() -> [Card] {
+        
+        // Instanciate an array to store the cards
+        var cardArray = [Card]()
         
         // Loop eight times to create 8 pairs of cards and add them to the array
         for _ in 1...8 {
