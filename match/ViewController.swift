@@ -13,6 +13,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var collectionView: UICollectionView!
     
     var cardArray = [Card]()
+    
+    var firstFlippedCardIndex:IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,10 +49,51 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if !card.isFlipped {
             cell.flip()
             card.isFlipped = true
-        } else {
-            cell.flipBack()
-            card.isFlipped = false
+            
+            if firstFlippedCardIndex == nil {
+                firstFlippedCardIndex = indexPath
+            }
+            else {
+                // This is the second card being flipped
+                
+                // Look for similarity and flip them back or remove them.
+                compareCards(indexPath)
+                firstFlippedCardIndex = nil
+            }
+        }
+    }
+    
+    func compareCards(_ secondFlippedCardIndex:IndexPath) {
+        
+        let cardOneCell = collectionView.cellForItem(at: firstFlippedCardIndex!) as? CardCollectionViewCell
+        let cardTwoCell = collectionView.cellForItem(at: secondFlippedCardIndex) as? CardCollectionViewCell
+        
+        let cardOne = cardArray[firstFlippedCardIndex!.row]
+        let cardTwo = cardArray[secondFlippedCardIndex.row]
+        
+        if cardOne.imageName == cardTwo.imageName {
+            
+            // Found a matching pair. Set the statuses to true
+            cardOne.isMatched = true
+            cardTwo.isMatched = true
+            
+            // Remove the cells
+            cardOneCell?.remove()
+            cardTwoCell?.remove()
+            
+        }
+        else {
+            
+            // The cards didn't match. Flip them back
+            cardOneCell?.flipBack()
+            cardTwoCell?.flipBack()
+            
+            // Change their flip statuses back to false 
+            cardOne.isFlipped = false
+            cardTwo.isFlipped = false
+            
         }
     }
 }
+
 

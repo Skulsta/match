@@ -39,9 +39,25 @@ class CardCollectionViewCell: UICollectionViewCell {
     
     func flipBack() {
         
-        // The actual flipping
-        UIView.transition(from: frontCardImageView, to: backCardImageView, duration: 0.3, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            
+            UIView.transition(from: self.frontCardImageView, to: self.backCardImageView, duration: 0.3, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+        }
         
-    } 
+    }
+    
+    func remove() {
+        
+        // Remove two cells from the view when a match has been found
+        backCardImageView.alpha = 0
+        
+        UIView.animate(withDuration: 0.3, delay: 0.5, options: .curveEaseOut, animations: {
+            self.frontCardImageView.alpha = 0
+        }, completion: nil)
+        
+        // TODO: Animate it
+        
+        
+    }
     
 }
