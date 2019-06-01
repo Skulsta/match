@@ -12,6 +12,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var timerLabel: UILabel!
+    
+    
+    var timer:Timer?
+    
+    var milliseconds:Float = 30 * 1000 // 30 seconds
+    
     var cardArray = [Card]()
     
     var firstFlippedCardIndex:IndexPath?
@@ -81,6 +88,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cardOneCell?.remove()
             cardTwoCell?.remove()
             
+            // Check if those were the last two cards
+            checkWinCondition()
+            
         }
         else {
             
@@ -99,7 +109,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             collectionView.reloadItems(at: [firstFlippedCardIndex!])
         }
         
+    }
+    
+    func checkWinCondition() {
         
+        // Some code 
         
     }
 }
