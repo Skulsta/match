@@ -46,6 +46,9 @@ class CardModel {
             
         }
         
+        // Shuffle the cards
+        cardArray.shuffle()
+        
         return cardArray
         
     }
