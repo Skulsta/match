@@ -12,7 +12,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var cardModel = CardModel()
     var cardArray = [Card]()
 
     override func viewDidLoad() {
@@ -22,7 +21,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        cardArray = cardModel.getCards()
+        cardArray = CardModel.getCards()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

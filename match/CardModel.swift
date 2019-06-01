@@ -10,7 +10,7 @@ import Foundation
 
 class CardModel {
     
-    func getCards() -> [Card] {
+    static func getCards() -> [Card] {
         
         // Instanciate an array to store the cards
         var cardArray = [Card]()
