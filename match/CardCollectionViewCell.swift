@@ -21,6 +21,18 @@ class CardCollectionViewCell: UICollectionViewCell {
         
         self.card = card
         
+        if card.isMatched {
+            self.frontCardImageView.alpha = 0
+            self.backCardImageView.alpha = 0
+            
+            return
+        }
+        else {
+            self.frontCardImageView.alpha = 1
+            self.backCardImageView.alpha = 1
+        }
+        
+        
         frontCardImageView.image = UIImage(named: card.imageName)
         
         if card.isFlipped {
@@ -51,12 +63,10 @@ class CardCollectionViewCell: UICollectionViewCell {
         // Remove two cells from the view when a match has been found
         backCardImageView.alpha = 0
         
+        // Animate the removal
         UIView.animate(withDuration: 0.3, delay: 0.5, options: .curveEaseOut, animations: {
             self.frontCardImageView.alpha = 0
         }, completion: nil)
-        
-        // TODO: Animate it
-        
         
     }
     

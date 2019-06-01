@@ -46,7 +46,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         let card = cardArray[indexPath.row]
         
-        if !card.isFlipped {
+        if !card.isFlipped && !card.isMatched {
             cell.flip()
             card.isFlipped = true
             
