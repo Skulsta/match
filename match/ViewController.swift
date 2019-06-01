@@ -93,6 +93,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cardTwo.isFlipped = false
             
         }
+        
+        // Make sure the first card cell does not get reused when we scroll it out of view and there is a match
+        if cardOneCell == nil {
+            collectionView.reloadItems(at: [firstFlippedCardIndex!])
+        }
+        
+        
+        
     }
 }
 
