@@ -25,12 +25,29 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
+        // Get the cards
+        cardArray = CardModel.getCards()
+
+        // Do any additional setup after loading the view.
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        cardArray = CardModel.getCards()
+        // Instanciate the Timer
+        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerElapsed), userInfo: nil, repeats: true)
+    }
+    
+    // MARK: Timer methods
+    
+    @objc func timerElapsed() {
+        
+        // Updating the label constantly
+        milliseconds -= 1
+        
+        // Convert to seconds
+        let seconds = String(format: "%.2f", milliseconds/1000)
+    
+        timerLabel.text = "Time remaining: \(seconds)"
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
