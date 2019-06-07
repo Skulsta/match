@@ -17,7 +17,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var timer:Timer?
     
-    var milliseconds:Float = 30 * 1000 // 30 seconds
+    var milliseconds:Float = 45 * 1000 // 30 seconds
     
     var cardArray = [Card]()
     
@@ -35,6 +35,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         // Instanciate the Timer
         timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerElapsed), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer!, forMode: .common)
     }
     
     // MARK: Timer methods
@@ -48,6 +49,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let seconds = String(format: "%.2f", milliseconds/1000)
     
         timerLabel.text = "Time remaining: \(seconds)"
+        
+        // When the timer has reached 0. Stop it. Also, the player has lost.
+        if milliseconds <= 0 {
+            timer?.invalidate() // Stop it from ever firing off again.
+            timerLabel.textColor = UIColor.red
+            
+            // Check if there are any cards left
+            checkWinCondition()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -130,8 +140,51 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func checkWinCondition() {
         
-        // Some code 
+        // Determine if there are any cards unmatched
+        var isWon = true
         
+        for card in cardArray {
+            if card.isMatched == false {
+                isWon = false
+                break
+            }
+        }
+        
+        // Messaging variables
+        var title = "Congratulations!"
+        var message = "You've won"
+        
+        
+        // The player has won. Stop the timer.
+        if isWon == true {
+            if milliseconds > 0 {
+                timer?.invalidate()
+            }
+        }
+        else {
+            if milliseconds > 0 {
+                return
+            }
+            
+            // The player has lost
+            title = "Game Over"
+            message = "You've lost"
+        }
+        
+        
+        showAlert(title, message)
+
+    }
+    
+    
+    func showAlert (_ title: String, _ message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        
+        alert.addAction(alertAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 
