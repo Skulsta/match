@@ -27,7 +27,7 @@ class CardModel {
             // Create two cards with the same value and add them to the array
             for card in cardArray {
                 
-                if card.imageName == "card\(randomNumber)" {
+                if card.imageName == "person\(randomNumber)" {
                     
                     existingCard = true
                 }
@@ -36,11 +36,11 @@ class CardModel {
             if existingCard == false {
             
                 let cardOne = Card()
-                cardOne.imageName = "card\(randomNumber)"
+                cardOne.imageName = "person\(randomNumber)"
                 cardArray.append(cardOne)
                 
                 let cardTwo = Card()
-                cardTwo.imageName = "card\(randomNumber)"
+                cardTwo.imageName = "person\(randomNumber)"
                 cardArray.append(cardTwo)
             }
             

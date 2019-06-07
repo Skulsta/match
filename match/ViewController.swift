@@ -14,7 +14,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBOutlet weak var timerLabel: UILabel!
     
-    
     var timer:Timer?
     
     var milliseconds:Float = 45 * 1000 // 30 seconds
@@ -22,6 +21,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var cardArray = [Card]()
     
     var firstFlippedCardIndex:IndexPath?
+    
+    var soundManager = SoundManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Instanciate the Timer
         timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerElapsed), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        soundManager.playSound(.shuffle)
     }
     
     // MARK: Timer methods
@@ -76,12 +81,20 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        // Make sure you can't keep playing when the time has ran out
+        if milliseconds <= 0 {
+            return
+        }
+        
+        
+        
         let cell = collectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
         
         let card = cardArray[indexPath.row]
         
         if !card.isFlipped && !card.isMatched {
             cell.flip()
+            soundManager.playSound(.flip )
             card.isFlipped = true
             
             if firstFlippedCardIndex == nil {
@@ -108,6 +121,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if cardOne.imageName == cardTwo.imageName {
             
             // Found a matching pair. Set the statuses to true
+            
+            soundManager.playSound(.match)
+            
             cardOne.isMatched = true
             cardTwo.isMatched = true
             
@@ -122,6 +138,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         else {
             
             // The cards didn't match. Flip them back
+            soundManager.playSound(.nomatch)
+            
             cardOneCell?.flipBack()
             cardTwoCell?.flipBack()
             
@@ -151,8 +169,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         
         // Messaging variables
-        var title = "Congratulations!"
-        var message = "You've won"
+        var title = "Gratulerer!"
+        var message = "Du vant"
         
         
         // The player has won. Stop the timer.
@@ -167,8 +185,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
             
             // The player has lost
-            title = "Game Over"
-            message = "You've lost"
+            title = "Aiaiaiai"
+            message = "Tiden løp ut"
         }
         
         
